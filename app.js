@@ -70,40 +70,8 @@ fs.readdirSync(routesPath).forEach(function(file) {
 
 // Bootstrap api
 var apiPath = path.join(__dirname, 'api');
-
-/*fs.readdirSync(apiPath).forEach(function(file) {
-  var useName = '/api/' + file;
-  var fileName = apiPath + '/' + file;
-  //app.use(useName, require(fileName));
-});*/
-
-var walk = function(dir, done) {
-  var results = [];
-  fs.readdir(dir, function(err, list) {
-    if (err) return done(err);
-    var i = 0;
-    (function next() {
-      var file = list[i++];
-      if (!file) return done(null, results);
-      file = dir + '/' + file;
-      fs.stat(file, function(err, stat) {
-        if (stat && stat.isDirectory()) {
-          walk(file, function(err, res) {
-            results = results.concat(res);
-            next();
-          });
-        } else {
-          results.push(file);
-          next();
-        }
-      });
-    })();
-  });
-};
-
-walk(apiPath, function(err, results) {
-  if (err) throw err;
-  console.log(results);
+fs.readdirSync(apiPath).forEach(function(file) {
+  app.use('/api', require(apiPath + '/' + file));
 });
 
 // Start server
@@ -111,4 +79,3 @@ var port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log('Express server listening on port %d in %s mode', port, app.get('env'));
 });
-

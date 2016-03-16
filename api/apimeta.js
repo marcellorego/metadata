@@ -35,7 +35,7 @@ api.addApimeta = function (req, res) {
   var apimeta;
 
   if(typeof req.body.apimeta == 'undefined'){
-    return res.status(500).json({message: 'apimeta is undefined'});
+    res.status(500).json({message: 'apimeta is undefined'});
   }
 
   apimeta = new Apimeta(req.body.apimeta);
@@ -101,6 +101,7 @@ api.deleteApimeta = function (req, res) {
       }
     });
   });
+
 };
 
 

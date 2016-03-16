@@ -1,8 +1,7 @@
 // Module dependencies.
 var express = require('express'),
-    router = express.Router({mergeParams: true}),
+    router = express.Router(),
     mongoose = require('mongoose'),
-    apiRouter = require('./apimeta'),
     Object = mongoose.models.Object,
     api = {};
 
@@ -112,7 +111,7 @@ api.deleteObject = function (req, res) {
 };
 
 
-router.get('/object', api.objects);
+router.get('/objects', api.objects);
 router.post('/object', api.addObject);
 
 router.route('/object/:id')
@@ -120,20 +119,5 @@ router.route('/object/:id')
   .put(api.editObject)
   .delete(api.deleteObject);
 
-// you can nest routers by attaching them as middleware:
-/*apiRouter.use('/apimeta/:apiId/object', router);
-apiRouter.use('/apimeta/:apiId/object/:objectId', router);
-
-itemRouter.route('/')
-    .get(function (req, res) {
-        res.status(200)
-            .send('hello items from user ' + req.params.userId);
-    });
-
-itemRouter.route('/:itemId')
-    .get(function (req, res) {
-        res.status(200)
-            .send('hello item ' + req.params.itemId + ' from user ' + req.params.userId);
-    });*/
 
 module.exports = router;
